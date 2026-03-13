@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Golden Holidays — Company Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold:        #B8960C;
+    --gold-mid:    #C9A828;
+    --gold-light:  #D4B84A;
+    --gold-bright: #E8CE70;
+    --gold-pale:   #F2E0A0;
+    --ink:         #0D0B09;
+    --ink1:        #141109;
+    --ink2:        #1C1710;
+    --ink3:        #231E13;
+    --text:        #F5EDD8;
+    --text-sec:    #C8B890;
+    --text-muted:  #7A6E58;
+    --text-dim:    #4A4438;
+    --border:      rgba(201,168,40,0.22);
+    --border2:     rgba(201,168,40,0.45);
+  }
+
+  html { background: #1a1610; }
+
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    background: #1a1610;
+    color: var(--text);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── PAGE LAYOUT ── */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    background: var(--ink);
+    margin: 0 auto 24px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── AMBIENT GLOW ── */
+  .glow-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 320px;
+    background: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(184,150,12,0.15) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  .glow-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 200px;
+    background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(122,92,0,0.10) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  /* ── TOP RULE ── */
+  .top-rule {
+    position: absolute;
+    top: 0; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-mid), transparent);
+  }
+  .bottom-rule {
+    position: absolute;
+    bottom: 0; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-mid), transparent);
+  }
+
+  /* ── CORNER MARKS ── */
+  .corner { position: absolute; width: 18px; height: 18px; opacity: 0.35; }
+  .corner-tl { top: 18px; left: 18px; border-top: 1px solid var(--gold-mid); border-left: 1px solid var(--gold-mid); }
+  .corner-tr { top: 18px; right: 18px; border-top: 1px solid var(--gold-mid); border-right: 1px solid var(--gold-mid); }
+  .corner-bl { bottom: 18px; left: 18px; border-bottom: 1px solid var(--gold-mid); border-left: 1px solid var(--gold-mid); }
+  .corner-br { bottom: 18px; right: 18px; border-bottom: 1px solid var(--gold-mid); border-right: 1px solid var(--gold-mid); }
+
+  /* ── CONTENT WRAPPER ── */
+  .content { position: relative; z-index: 2; padding: 48px 52px; flex: 1; display: flex; flex-direction: column; }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo-block { display: flex; align-items: center; gap: 16px; }
+  .logo-emblem { flex-shrink: 0; }
+  .logo-text-block { display: flex; flex-direction: column; }
+  .logo-name {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.55em;
+    color: var(--gold-mid);
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+  .logo-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+  .header-meta {
+    text-align: right;
+  }
+  .header-meta-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.35em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .header-meta-value {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* ── HERO SECTION ── */
+  .hero { text-align: center; margin-bottom: 44px; }
+  .eyebrow {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.55em;
+    color: var(--gold-mid);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .hero-title {
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .hero-subtitle {
+    font-size: 16px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-sec);
+    line-height: 1.75;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .gold-rule {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border2), transparent);
+    margin: 28px 0;
+  }
+
+  /* ── TWO COL ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 36px; }
+
+  /* ── SECTION HEADING ── */
+  .section-heading {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 8.5px;
+    letter-spacing: 0.5em;
+    color: var(--gold-mid);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── WHAT WE DO BLOCK ── */
+  .what-we-do {
+    grid-column: 1 / -1;
+    margin-bottom: 8px;
+  }
+  .what-we-do p {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--text-sec);
+    line-height: 1.9;
+  }
+  .what-we-do p + p { margin-top: 12px; }
+
+  /* ── WHAT WE STAND FOR ── */
+  .principles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .principle-card {
+    background: var(--ink2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+    position: relative;
+  }
+  .principle-num {
+    position: absolute;
+    top: 14px; right: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: rgba(201,168,40,0.12);
+    line-height: 1;
+  }
+  .principle-name {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    margin-bottom: 7px;
+  }
+  .principle-desc {
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ── WHAT SETS US APART ── */
+  .differentiators { display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; }
+  .diff-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--ink2);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--gold-mid);
+    border-radius: 0 6px 6px 0;
+  }
+  .diff-icon {
+    color: var(--gold-mid);
+    font-size: 14px;
+    margin-top: 1px;
+    flex-shrink: 0;
+    width: 16px;
+    text-align: center;
+  }
+  .diff-content { flex: 1; }
+  .diff-title {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--gold-bright);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .diff-text {
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  /* ── WHO WE SERVE ── */
+  .audience-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 36px; }
+  .audience-card {
+    background: var(--ink2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+  .audience-icon {
+    font-size: 20px;
+    margin-bottom: 8px;
+    display: block;
+    opacity: 0.7;
+  }
+  .audience-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .audience-desc {
+    font-size: 12px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  /* ── FOOTER STRIP ── */
+  .footer-strip {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-stamp {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.35em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  .footer-ornament {
+    color: var(--gold-mid);
+    font-size: 14px;
+    opacity: 0.5;
+  }
+
+  /* ══════════════════════════════
+     PAGE 2 — CONTACT
+  ══════════════════════════════ */
+  .contact-hero {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .contact-hero-title {
+    font-size: 44px;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .contact-hero-title em { font-style: italic; color: var(--gold-light); }
+  .contact-hero-sub {
+    font-size: 16px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+
+  .contact-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  /* Big phone block */
+  .phone-block {
+    text-align: center;
+    padding: 42px 60px;
+    background: var(--ink2);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+  }
+  .phone-block::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 15%; right: 15%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-mid), transparent);
+  }
+  .phone-block::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 15%; right: 15%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-mid), transparent);
+  }
+  .phone-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.5em;
+    color: var(--gold-mid);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .phone-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--text);
+    letter-spacing: 0.06em;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .phone-note {
+    font-size: 13px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-dim);
+  }
+
+  /* WhatsApp line */
+  .wa-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    background: rgba(37, 211, 102, 0.06);
+    border: 1px solid rgba(37, 211, 102, 0.18);
+    border-radius: 6px;
+    width: 100%;
+    max-width: 380px;
+    justify-content: center;
+  }
+  .wa-icon { color: #25D366; font-size: 18px; }
+  .wa-text {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: #5ddb94;
+    text-transform: uppercase;
+  }
+
+  /* Details row */
+  .contact-details-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    width: 100%;
+    margin-top: 10px;
+  }
+  .contact-detail-card {
+    background: var(--ink2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 16px;
+    text-align: center;
+  }
+  .detail-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.4em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .detail-value {
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-sec);
+  }
+
+  /* Closing quote */
+  .closing-quote {
+    text-align: center;
+    margin-top: 40px;
+    padding: 0 40px;
+  }
+  .closing-quote blockquote {
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-sec);
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+  .closing-quote cite {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 8.5px;
+    letter-spacing: 0.4em;
+    color: var(--gold-mid);
+    font-style: normal;
+    text-transform: uppercase;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    html, body { background: #0D0B09; }
+    .page { margin: 0; page-break-after: always; }
+    .page:last-child { page-break-after: avoid; }
+  }
+
+  @media screen and (max-width: 750px) {
+    .page { width: 100%; min-height: auto; }
+    .content { padding: 32px 28px; }
+    .principles-grid { grid-template-columns: 1fr; }
+    .audience-grid { grid-template-columns: 1fr 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 1 — COMPANY PROFILE
+═══════════════════════════════════════════════ -->
+<div class="page">
+  <div class="glow-top"></div>
+  <div class="glow-bottom"></div>
+  <div class="top-rule"></div>
+  <div class="bottom-rule"></div>
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <div class="content">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-block">
+        <div class="logo-emblem">
+          <svg width="44" height="36" viewBox="0 0 70 56" fill="none">
+            <path d="M35 4C32 10 22 13 14 10C17 20 14 30 7 34C16 34 22 41 22 52C25 46 35 42 35 42C35 42 45 46 48 52C48 41 54 34 63 34C56 30 53 20 56 10C48 13 38 10 35 4Z" stroke="#C9A828" stroke-width="1.3" stroke-linejoin="round" fill="rgba(184,150,12,0.08)"/>
+          </svg>
+        </div>
+        <div class="logo-text-block">
+          <span class="logo-name">Golden Holidays</span>
+          <span class="logo-tagline">Your Exclusive Travel Partner</span>
+        </div>
+      </div>
+      <div class="header-meta">
+        <div class="header-meta-label">Company Profile</div>
+        <div class="header-meta-value">Bangalore · Est. 2024</div>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+      <span class="eyebrow">Curated · Private · Unforgettable</span>
+      <h1 class="hero-title">We don't plan trips.<br/>We craft <em>moments</em>.</h1>
+      <div style="width:48px;height:1px;background:linear-gradient(to right, transparent, var(--gold-mid), transparent);margin:18px auto;"></div>
+      <p class="hero-subtitle">Golden Holidays is a premium concierge travel company crafting rare, private experiences across South India — for those who believe how you travel matters as much as where you go.</p>
+    </div>
+
+    <div class="gold-rule"></div>
+
+    <!-- What We Do -->
+    <div style="margin-bottom:32px;">
+      <div class="section-heading">What we do</div>
+      <p style="font-size:16px;font-weight:300;color:var(--text-sec);line-height:1.9;">
+        We design and deliver curated private experiences — bespoke day journeys, multi-day retreats, and heritage immersions — within 300 kilometres of Bangalore. Every experience is personally researched, thoughtfully sequenced, and executed with an attention to detail that mass travel simply cannot offer.
+      </p>
+      <p style="font-size:16px;font-weight:300;color:var(--text-sec);line-height:1.9;margin-top:12px;">
+        We are not a booking platform. We are not a tour operator. We are a private travel partner — engaged before you leave and available until you return. Every enquiry is handled personally. Every journey is unique.
+      </p>
+    </div>
+
+    <div class="gold-rule"></div>
+
+    <!-- What We Stand For -->
+    <div style="margin-bottom:32px;">
+      <div class="section-heading">What we stand for</div>
+      <div class="principles-grid">
+        <div class="principle-card">
+          <span class="principle-num">01</span>
+          <div class="principle-name">Curated</div>
+          <div class="principle-desc">Nothing goes on our list without being experienced first. We know every property, every route, every guide — personally.</div>
+        </div>
+        <div class="principle-card">
+          <span class="principle-num">02</span>
+          <div class="principle-name">Personal</div>
+          <div class="principle-desc">One point of contact from first enquiry to your return. No call centres. No chat systems. A human being who knows your journey.</div>
+        </div>
+        <div class="principle-card">
+          <span class="principle-num">03</span>
+          <div class="principle-name">Premium</div>
+          <div class="principle-desc">The vehicle, the timing, the table, the light — every detail is considered. Excellence is not an add-on. It is the standard.</div>
+        </div>
+        <div class="principle-card">
+          <span class="principle-num">04</span>
+          <div class="principle-name">Discreet</div>
+          <div class="principle-desc">Your itinerary, your preferences, your guests — private by default. We do not publish client details or use journeys for promotion.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gold-rule"></div>
+
+    <!-- Who We Serve -->
+    <div style="margin-bottom:32px;">
+      <div class="section-heading">Who we serve</div>
+      <div class="audience-grid">
+        <div class="audience-card">
+          <span class="audience-label">Couples</span>
+          <div class="audience-desc">Anniversaries, proposals, quiet escapes — occasions that deserve to be extraordinary.</div>
+        </div>
+        <div class="audience-card">
+          <span class="audience-label">Families</span>
+          <div class="audience-desc">Multigenerational travel, NRI homecomings, and experiences that work for every age.</div>
+        </div>
+        <div class="audience-card">
+          <span class="audience-label">Corporate</span>
+          <div class="audience-desc">Leadership retreats, client offsites, and team journeys with a sense of occasion.</div>
+        </div>
+        <div class="audience-card">
+          <span class="audience-label">Discerning</span>
+          <div class="audience-desc">Travellers who have been everywhere and are searching for what most miss.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gold-rule"></div>
+
+    <!-- What Sets Us Apart -->
+    <div style="margin-bottom:8px;">
+      <div class="section-heading">What sets us apart</div>
+      <div class="differentiators">
+        <div class="diff-item">
+          <div class="diff-icon">✦</div>
+          <div class="diff-content">
+            <div class="diff-title">Restricted Access</div>
+            <div class="diff-text">We hold relationships with heritage properties, estate owners, and ASI archaeologists that allow our guests access no public tour can offer.</div>
+          </div>
+        </div>
+        <div class="diff-item">
+          <div class="diff-icon">✦</div>
+          <div class="diff-content">
+            <div class="diff-title">Fleet We Own & Operate</div>
+            <div class="diff-text">Our vehicles — Mercedes, Innova Crysta, Urbania — are not aggregated. They are ours, briefed, prepared, and ready before you call.</div>
+          </div>
+        </div>
+        <div class="diff-item">
+          <div class="diff-icon">✦</div>
+          <div class="diff-content">
+            <div class="diff-title">No Automation, Ever</div>
+            <div class="diff-text">Enquiries are answered by a person. Itineraries are built by a person. Every interaction is a conversation, not a workflow.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-strip">
+      <span class="footer-stamp">Golden Holidays · Bangalore, India</span>
+      <span class="footer-ornament">✦</span>
+      <span class="footer-stamp">Confidential — For Recipient Only</span>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /page 1 -->
+
+
+<!-- ═══════════════════════════════════════════════
+     PAGE 2 — CONTACT
+═══════════════════════════════════════════════ -->
+<div class="page">
+  <div class="glow-top"></div>
+  <div class="glow-bottom"></div>
+  <div class="top-rule"></div>
+  <div class="bottom-rule"></div>
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <div class="content">
+
+    <!-- Header (same as page 1) -->
+    <div class="header">
+      <div class="logo-block">
+        <div class="logo-emblem">
+          <svg width="44" height="36" viewBox="0 0 70 56" fill="none">
+            <path d="M35 4C32 10 22 13 14 10C17 20 14 30 7 34C16 34 22 41 22 52C25 46 35 42 35 42C35 42 45 46 48 52C48 41 54 34 63 34C56 30 53 20 56 10C48 13 38 10 35 4Z" stroke="#C9A828" stroke-width="1.3" stroke-linejoin="round" fill="rgba(184,150,12,0.08)"/>
+          </svg>
+        </div>
+        <div class="logo-text-block">
+          <span class="logo-name">Golden Holidays</span>
+          <span class="logo-tagline">Your Exclusive Travel Partner</span>
+        </div>
+      </div>
+      <div class="header-meta">
+        <div class="header-meta-label">Get in Touch</div>
+        <div class="header-meta-value">A real conversation awaits</div>
+      </div>
+    </div>
+
+    <!-- Main contact centre -->
+    <div class="contact-center">
+
+      <!-- Intro -->
+      <div style="text-align:center;max-width:460px;">
+        <span class="eyebrow">Begin your journey</span>
+        <h2 style="font-size:36px;font-weight:300;color:var(--text);line-height:1.15;margin-bottom:10px;">
+          Every great experience<br/>starts with a <em style="font-style:italic;color:var(--gold-light);">conversation.</em>
+        </h2>
+        <div style="width:40px;height:1px;background:linear-gradient(to right,transparent,var(--gold-mid),transparent);margin:16px auto;"></div>
+        <p style="font-size:15px;font-weight:300;font-style:italic;color:var(--text-muted);line-height:1.8;">
+          No forms. No bots. No hold music. Reach out directly — and we'll take it from there.
+        </p>
+      </div>
+
+      <!-- Phone card -->
+      <div class="phone-block">
+        <span class="phone-label">Direct Line</span>
+        <div class="phone-number">+91 99029 33877</div>
+        <div class="phone-note">Available daily · Responds promptly</div>
+      </div>
+
+      <!-- WhatsApp -->
+      <div class="wa-line">
+        <div class="wa-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        </div>
+        <span class="wa-text">Also available on WhatsApp</span>
+      </div>
+
+      <!-- Detail cards -->
+      <div class="contact-details-row">
+        <div class="contact-detail-card">
+          <div class="detail-label">Based in</div>
+          <div class="detail-value">Bangalore, Karnataka</div>
+        </div>
+        <div class="contact-detail-card">
+          <div class="detail-label">Operates across</div>
+          <div class="detail-value">South India · Within 300km</div>
+        </div>
+        <div class="contact-detail-card">
+          <div class="detail-label">Response time</div>
+          <div class="detail-value">Within a few hours</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Closing quote -->
+    <div class="closing-quote">
+      <div class="gold-rule" style="margin-bottom:32px;"></div>
+      <blockquote>
+        "We do not sell packages. We build the kind of travel that stays with you — the kind you tell stories about years later."
+      </blockquote>
+      <cite>— Golden Holidays</cite>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-strip" style="margin-top:32px;">
+      <span class="footer-stamp">Golden Holidays · Bangalore, India</span>
+      <span class="footer-ornament">✦</span>
+      <span class="footer-stamp">+91 99029 33877</span>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /page 2 -->
+
+</body>
+</html>
